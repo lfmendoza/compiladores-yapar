@@ -1,0 +1,88 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="22.0.0" type="device">
+  <diagram name="YAPar Architecture" id="yapar-arch">
+    <mxGraphModel dx="900" dy="700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="yalp" value="archivo .yalp&lt;br&gt;&lt;i&gt;gramática (estilo Yacc)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="yalex" value="archivo .yalex&lt;br&gt;&lt;i&gt;reglas léxicas&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="240" y="40" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="fuente" value="fuente a parsear&lt;br&gt;&lt;i&gt;cadena de entrada&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="40" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lector_yapar" value="1. Lector YAPar&lt;br&gt;&lt;i&gt;parser del .yalp&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="135" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="yalex_dfa" value="2. YALex (previo)&lt;br&gt;&lt;i&gt;DFA léxico&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="240" y="135" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="gramatica" value="3. Gramática G&lt;br&gt;&lt;i&gt;aumentada con S&amp;#39;&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="230" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="lexer" value="4. Lexer&lt;br&gt;&lt;i&gt;cadena → tokens&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="240" y="230" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="first_follow" value="5. FIRST / FOLLOW&lt;br&gt;&lt;i&gt;punto fijo&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="325" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="automata" value="6. Autómata LR(0)&lt;br&gt;&lt;i&gt;closure / goto&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="420" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="visualizacion" value="9. Visualización&lt;br&gt;&lt;i&gt;Graphviz / .dot&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="420" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="tabla_slr" value="7. Tabla SLR(1)&lt;br&gt;&lt;i&gt;ACTION / GOTO&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="515" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="motor" value="8. Motor del Parser (LR pila)&lt;br&gt;&lt;i&gt;shift / reduce / accept → árbol&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="240" y="515" width="360" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_in" value="Entradas" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_mod" value="Módulos internos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#2563eb;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="160" y="640" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_out" value="Salidas / piezas finales" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=1.5;fontSize=11;fontStyle=1;align=center;verticalAlign=middle;spacingTop=2;spacingBottom=2;" vertex="1" parent="1">
+          <mxGeometry x="320" y="640" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="yalp" target="lector_yapar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="yalex" target="yalex_dfa">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="G" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="lector_yapar" target="gramatica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="DFA" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="yalex_dfa" target="lexer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="G" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="gramatica" target="first_follow">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="FIRST/FOLLOW + G" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="first_follow" target="automata">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="estados I0..In" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="automata" target="tabla_slr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="ACTION/GOTO" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="tabla_slr" target="motor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="tokens" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;" edge="1" parent="1" source="lexer" target="motor">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" value="estados" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;edgeStyle=orthogonalEdgeStyle;" edge="1" parent="1" source="automata" target="visualizacion">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" value="se tokeniza" style="endArrow=classic;html=1;rounded=0;strokeColor=#374151;strokeWidth=1.3;fontSize=10;edgeStyle=orthogonalEdgeStyle;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="fuente" target="lexer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
