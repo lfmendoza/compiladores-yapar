@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    branches: ["main", "feat/**", "fix/**"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -e . -r requirements.txt
+
+      - name: Lint
+        run: ruff check src/ tests/
+
+      - name: Test with coverage
+        run: pytest --cov=src/yapar --cov-report=term-missing --cov-fail-under=80
