@@ -1,0 +1,10 @@
+(* if-else grammar — classic shift/reduce conflict in SLR(1) *)
+
+TOKENS  IF THEN ELSE STMT
+
+%%
+
+stmt : IF STMT THEN stmt ELSE stmt
+     | IF STMT THEN stmt
+     | STMT
+     ;

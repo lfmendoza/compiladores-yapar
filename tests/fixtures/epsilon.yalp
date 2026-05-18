@@ -1,0 +1,13 @@
+(* Grammar with epsilon-productions — regression test for closure/goto termination *)
+
+TOKENS  A B C
+
+%%
+
+S : A B
+  | A opt_C
+  ;
+
+opt_C : C
+      |
+      ;

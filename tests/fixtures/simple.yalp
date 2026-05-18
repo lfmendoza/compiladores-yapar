@@ -1,0 +1,21 @@
+(* Simple arithmetic grammar — no shift/reduce conflicts *)
+
+TOKENS  ID PLUS MINUS TIMES DIV LPAREN RPAREN
+
+IGNORE  WS
+
+%%
+
+expr : expr PLUS term
+     | expr MINUS term
+     | term
+     ;
+
+term : term TIMES factor
+     | term DIV factor
+     | factor
+     ;
+
+factor : LPAREN expr RPAREN
+       | ID
+       ;
