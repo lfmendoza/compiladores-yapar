@@ -1,8 +1,11 @@
 """
-Generates docs/checkpoint_sprint1.docx.
+Generates docs/checkpoint_sprint1.docx  (Sprint 1 checkpoint report).
 
 Run with:
     python docs/generate_report.py
+
+For the M3 checkpoint report (Sprint 2), use:
+    python docs/generate_m3_report.py
 
 Requires python-docx (pip install python-docx).
 If docs/kanban_sprint1.png or docs/arquitectura_yapar.png are absent the
@@ -68,8 +71,8 @@ def _add_table(
         cell.text = h
         _bold_cell(cell)
         if col_widths:
-            from docx.oxml.ns import qn
             from docx.oxml import OxmlElement
+            from docx.oxml.ns import qn
             tc = cell._tc
             tcPr = tc.get_or_add_tcPr()
             tcW = OxmlElement("w:tcW")
