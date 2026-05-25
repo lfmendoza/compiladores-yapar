@@ -1,0 +1,25 @@
+(* Classical left-recursive arithmetic grammar.
+   Encodes operator precedence through rule stratification:
+   expr < term < factor.
+   Produces no shift/reduce conflicts under SLR(1) or LALR(1). *)
+
+TOKENS  ID NUM PLUS MINUS TIMES DIV LPAREN RPAREN
+
+IGNORE  WS NEWLINE
+
+%%
+
+expr : expr PLUS term
+     | expr MINUS term
+     | term
+     ;
+
+term : term TIMES factor
+     | term DIV factor
+     | factor
+     ;
+
+factor : LPAREN expr RPAREN
+       | NUM
+       | ID
+       ;

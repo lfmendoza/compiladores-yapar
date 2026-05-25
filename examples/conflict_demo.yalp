@@ -1,0 +1,16 @@
+(* Classic dangling-else grammar.
+   Produces a shift/reduce conflict in both SLR(1) and LALR(1) because
+   after parsing "IF cond THEN stmt" the parser cannot decide whether to
+   reduce immediately or shift ELSE.
+   YAPar reports the conflicting state and lookahead so the grammar can be
+   revised (e.g. by introducing explicit blocks) or the conflict documented
+   as an intentional ambiguity resolved by prefer-shift. *)
+
+TOKENS  IF THEN ELSE STMT
+
+%%
+
+stmt : IF STMT THEN stmt ELSE stmt
+     | IF STMT THEN stmt
+     | STMT
+     ;

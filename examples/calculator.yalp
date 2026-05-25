@@ -1,0 +1,34 @@
+(* Calculator grammar with function calls and argument lists.
+   Extends the arithmetic grammar with call expressions and comma-separated
+   argument lists. Still conflict-free under SLR(1). *)
+
+TOKENS  ID NUM PLUS MINUS TIMES DIV LPAREN RPAREN COMMA
+
+IGNORE  WS NEWLINE
+
+%%
+
+expr : expr PLUS term
+     | expr MINUS term
+     | term
+     ;
+
+term : term TIMES factor
+     | term DIV factor
+     | factor
+     ;
+
+factor : LPAREN expr RPAREN
+       | MINUS factor
+       | call
+       | NUM
+       | ID
+       ;
+
+call : ID LPAREN arglist RPAREN
+     | ID LPAREN RPAREN
+     ;
+
+arglist : arglist COMMA expr
+        | expr
+        ;
