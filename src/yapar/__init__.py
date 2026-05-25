@@ -18,6 +18,7 @@ from .lexer_bridge import EOF_TOKEN, Token, load_dfa, tokenize, tokens_from_file
 from .reader import parse_yalp, read_yalp
 from .sets import first, first_of_sequence, follow
 from .table import Accept, Reduce, Shift, SLRTable, build_slr_table
+from .validation import check_grammar, validate_grammar
 from .viz import render_automaton
 
 __all__ = [
@@ -62,4 +63,6 @@ __all__ = [
     "core",
     "merge_to_lalr",
     "build_lalr_table",
+    "validate_grammar",
+    "check_grammar",
 ]
