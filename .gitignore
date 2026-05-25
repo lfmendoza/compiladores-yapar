@@ -23,6 +23,8 @@ htmlcov/
 *.png
 !docs/arquitectura_yapar.png
 !docs/kanban_sprint1.png
+!docs/kanban_m3.png
+!docs/automaton_sample.png
 
 docs/checkpoint_sprint1.docx
 docs/checkpoint_m3.docx
