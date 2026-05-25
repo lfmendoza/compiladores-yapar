@@ -192,7 +192,13 @@ def _architecture() -> None:
         src = graphviz.Source(dot_src)
         out = DOCS_DIR / "arquitectura_yapar"
         src.render(outfile=str(out), format="png", cleanup=True)
+        raw_out = DOCS_DIR / "arquitectura_yapar"
         final = DOCS_DIR / "arquitectura_yapar.png"
+        if raw_out.exists() and not final.exists():
+            raw_out.rename(final)
+        elif raw_out.exists():
+            import shutil
+            shutil.copy2(str(raw_out), str(final))
         print(f"  arquitectura_yapar.png -> {final}")
     except Exception as exc:
         dot_path = DOCS_DIR / "arquitectura_yapar.dot"
