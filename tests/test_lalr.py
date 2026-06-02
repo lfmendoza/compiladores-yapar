@@ -30,11 +30,11 @@ def _simple_grammar() -> Grammar:
 
 def _arithmetic_grammar() -> Grammar:
     raw = {
-        "tokens": ["ID", "NUM", "PLUS", "MINUS", "TIMES", "DIV", "LPAREN", "RPAREN"],
+        "tokens": ["ID", "NUMBER", "PLUS", "MINUS", "TIMES", "DIV", "LPAREN", "RPAREN"],
         "rules": {
             "expr": [["expr", "PLUS", "term"], ["expr", "MINUS", "term"], ["term"]],
             "term": [["term", "TIMES", "factor"], ["term", "DIV", "factor"], ["factor"]],
-            "factor": [["LPAREN", "expr", "RPAREN"], ["NUM"], ["ID"]],
+            "factor": [["LPAREN", "expr", "RPAREN"], ["NUMBER"], ["ID"]],
         },
     }
     return grammar_from_dict(raw).augment()

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .automaton import Item, LR0Automaton, build_automaton, closure, goto
-from .engine import ParseNode, parse
+from .engine import ParseNode, ParseStep, parse, parse_verbose
 from .errors import ConflictError, ParseError, YAParError, YAParSyntaxError
 from .grammar import EOF, EPSILON, Grammar, Production, Symbol, grammar_from_dict
 from .lalr import (
@@ -53,7 +53,9 @@ __all__ = [
     "Reduce",
     "Accept",
     "parse",
+    "parse_verbose",
     "ParseNode",
+    "ParseStep",
     "render_automaton",
     "LR1Item",
     "LR1Automaton",

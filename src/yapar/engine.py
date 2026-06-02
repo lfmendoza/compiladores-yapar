@@ -19,6 +19,124 @@ class ParseNode:
         return f"{self.symbol}:{self.lexeme!r}" if self.lexeme else self.symbol
 
 
+@dataclass
+class ParseStep:
+    """Single step captured by parse_verbose() for educational display."""
+
+    step: int
+    state_stack: list[int]
+    symbol_stack: list[str]
+    lookahead: str
+    lookahead_lexeme: str
+    remaining: list[str]
+    action_type: str   # "SHIFT" | "REDUCE" | "ACCEPT"
+    action_str: str
+    production: str    # non-empty only for REDUCE
+
+
+def parse_verbose(
+    token_stream, table: SLRTable
+) -> tuple[ParseNode, list[ParseStep]]:
+    """Parse and return (parse_tree, step_trace).
+
+    The step trace records the state stack, symbol stack, lookahead and
+    action taken at every iteration so callers can render a textbook-style
+    LR parsing table.
+    """
+    grammar = table.grammar
+    tokens = list(token_stream)
+    pos = 0
+
+    state_stack: list[int] = [0]
+    node_stack: list[ParseNode] = []
+    trace: list[ParseStep] = []
+    step = 0
+
+    while True:
+        tok = tokens[pos] if pos < len(tokens) else None
+        tok_name = tok.tipo if tok is not None else "$"
+        tok_lexeme = tok.lexema if tok is not None else "$"
+        tok_line = tok.linea if tok is not None else -1
+        tok_col = tok.columna if tok is not None else -1
+
+        state = state_stack[-1]
+        action = table.get_action(state, tok_name)
+
+        if action is None:
+            raise ParseError(state, tok_name, tok_line, tok_col)
+
+        step += 1
+        remaining = [tokens[i].tipo for i in range(pos, min(pos + 5, len(tokens)))]
+        if pos + 5 < len(tokens):
+            remaining.append("...")
+
+        if isinstance(action, Shift):
+            trace.append(
+                ParseStep(
+                    step=step,
+                    state_stack=list(state_stack),
+                    symbol_stack=[n.symbol for n in node_stack],
+                    lookahead=tok_name,
+                    lookahead_lexeme=tok_lexeme,
+                    remaining=remaining,
+                    action_type="SHIFT",
+                    action_str=f"Shift  s{action.state}",
+                    production="",
+                )
+            )
+            node_stack.append(ParseNode(symbol=tok_name, lexeme=tok_lexeme))
+            state_stack.append(action.state)
+            pos += 1
+
+        elif isinstance(action, Reduce):
+            prod = grammar.production_by_id(action.production_id)
+            body_str = " ".join(str(s) for s in prod.body) if prod.body else "e"
+            prod_str = f"{prod.head} -> {body_str}"
+            trace.append(
+                ParseStep(
+                    step=step,
+                    state_stack=list(state_stack),
+                    symbol_stack=[n.symbol for n in node_stack],
+                    lookahead=tok_name,
+                    lookahead_lexeme=tok_lexeme,
+                    remaining=remaining,
+                    action_type="REDUCE",
+                    action_str=f"Reduce r{action.production_id}: {prod_str}",
+                    production=prod_str,
+                )
+            )
+            n = len(prod.body)
+            children = list(node_stack[-n:]) if n else []
+            if n:
+                node_stack = node_stack[:-n]
+                state_stack = state_stack[:-n]
+            new_node = ParseNode(symbol=prod.head.name, children=children)
+            node_stack.append(new_node)
+
+            top = state_stack[-1]
+            goto_state = table.get_goto(top, prod.head.name)
+            if goto_state is None:
+                raise ParseError(top, prod.head.name)
+            state_stack.append(goto_state)
+
+        elif isinstance(action, Accept):
+            trace.append(
+                ParseStep(
+                    step=step,
+                    state_stack=list(state_stack),
+                    symbol_stack=[n.symbol for n in node_stack],
+                    lookahead=tok_name,
+                    lookahead_lexeme=tok_lexeme,
+                    remaining=remaining,
+                    action_type="ACCEPT",
+                    action_str="Aceptar",
+                    production="",
+                )
+            )
+            result = node_stack[-1] if node_stack else ParseNode(symbol=grammar.start.name)
+            return result, trace
+
+
 def parse(token_stream, table: SLRTable) -> ParseNode:
     grammar = table.grammar
     tokens = list(token_stream)
